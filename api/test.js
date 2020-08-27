@@ -4,7 +4,7 @@ import { promisify } from "util";
 export default async (req, res) => {
   const client = createClient({
     // eslint-disable-next-line no-undef
-    url: REDIS
+    url: process.env.REDIS
   });
   const incrAsync = promisify(client.incr).bind(client);
   const count = await incrAsync("count");
