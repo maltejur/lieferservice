@@ -6,8 +6,8 @@ const client = createClient({
 
 export default async (req, res) => {
   if (req.query.name == undefined) {
-    res.status(400);
-    res.send("Invalid query");
+    res.status(400).send("Invalid query");
+    return;
   }
 
   await client.RPUSH("list", req.query.name);
