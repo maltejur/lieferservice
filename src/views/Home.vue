@@ -1,6 +1,21 @@
 <template>
   <div class="home">
-    <div class="container" style="margin-top: 10em">
+    <div v-if="loading">
+      <div class="container" style="margin-top: 10em">
+        <h1>Muhamads Pizzer</h1>
+      </div>
+      <div
+        class="d-flex justify-content-center align-items-center"
+        style="position:absolute;width:100%;height:100%;top:0"
+      >
+        <div
+          class="spinner-border"
+          role="status"
+          style="height:1.5em;width:1.5em"
+        />
+      </div>
+    </div>
+    <div v-else class="container" style="margin-top: 10em">
       <div class="d-flex justify-content-between flex-wrap">
         <div>
           <h1 class="mb-5">
@@ -112,6 +127,25 @@ interface Gericht {
   preis: number;
 }
 
+async function submit(vm: any) {
+  vm.loading = true;
+  const data = {
+    bestellung: vm.orderList(vm.basket),
+    name: (document.getElementById("inpName") as HTMLInputElement).value,
+    adresse: (document.getElementById("inpAdresse") as HTMLInputElement).value
+  };
+  console.log(data);
+  const response = await fetch("/api/order", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8"
+    },
+    body: JSON.stringify(data)
+  });
+  console.log(response);
+  vm.$router.push("confirm");
+}
+
 export default {
   name: "Home",
   components: { ListItem },
@@ -128,7 +162,8 @@ export default {
         }
       ] as Gericht[],
       basket: [] as Gericht[],
-      order: false
+      order: false,
+      loading: false
     };
   },
   methods: {
@@ -150,8 +185,8 @@ export default {
       });
       return ret;
     },
-    sendForm() {
-      alert(1);
+    sendForm: function() {
+      submit(this);
     }
   }
 };

@@ -1,16 +1,18 @@
 import { createClient } from "redis";
 
-const client = createClient({
-  url: process.env.REDIS
-});
-
 export default async (req, res) => {
-  if (req.query.name == undefined) {
-    res.status(400).send("Invalid query");
+  const client = createClient({
+    url: process.env.REDIS
+  });
+
+  if (req.body == undefined) {
+    res.status(400).send("Invalid body");
     return;
   }
 
-  await client.RPUSH("list", req.query.name);
+  client.RPUSH("list", JSON.stringify(req.body), () => {
+    client.quit();
 
-  res.send("OK");
+    res.json(req.body);
+  });
 };
