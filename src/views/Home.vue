@@ -153,12 +153,24 @@ export default {
     return {
       angebote: [
         {
-          name: "Döner",
+          name: "Döner Kebap",
           preis: 3
         },
         {
-          name: "Pizza",
+          name: "Dürüm Döner",
+          preis: 4
+        },
+        {
+          name: "Pizza Salami",
           preis: 5
+        },
+        {
+          name: "Pizza Hawai",
+          preis: 5
+        },
+        {
+          name: "Ayran",
+          preis: 1
         }
       ] as Gericht[],
       basket: [] as Gericht[],
