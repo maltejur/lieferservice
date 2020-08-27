@@ -1,17 +1,14 @@
 import { createClient } from "redis";
 import { promisify } from "util";
 
-export default async (req, res) => {
-  const client = createClient({
-    // eslint-disable-next-line no-undef
-    url: process.env.REDIS
-  });
-  const incrAsync = promisify(client.incr).bind(client);
-  const count = await incrAsync("count");
+const client = createClient({
+  url: process.env.REDIS
+});
 
-  client.quit();
+export default async (req, res) => {
+  const ret = await client.APPEND("list", "xd");
 
   res.json({
-    body: JSON.stringify(count)
+    body: JSON.stringify(ret)
   });
 };
