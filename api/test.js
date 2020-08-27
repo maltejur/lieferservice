@@ -6,9 +6,9 @@ const client = createClient({
 });
 
 export default async (req, res) => {
-  const ret = await client.APPEND("list", "xd");
+  await client.RPUSH("list", "xd");
 
   res.json({
-    body: JSON.stringify(ret)
+    body: JSON.stringify(true)
   });
 };
