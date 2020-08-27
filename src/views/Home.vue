@@ -38,7 +38,7 @@
         <div
           v-if="basket.length != 0"
           class="card p-4"
-          style="width:300px; height: fit-content"
+          style="width:300px; height: fit-content; height: max-content"
         >
           <h4 class="mb-3">Warenkorb:</h4>
 
