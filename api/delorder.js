@@ -10,8 +10,8 @@ export default async (req, res) => {
     return;
   }
 
-  client.LSET("list", Number(req.query.index), "DELETED", () => {
-    client.LREM("list", 1, "DELETED", () => {
+  client.LSET("list", Number(req.query.index), '["DELETED"]', () => {
+    client.LREM("list", 1, '["DELETED"]', () => {
       client.quit();
 
       res.send("OK");
